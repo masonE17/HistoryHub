@@ -6,13 +6,28 @@ import { historyData } from "./data.js";
 
 export default function App() {
     const [index, setIndex] = React.useState(0);
+    const [showDetails, setShowDetails] = React.useState(false);
 
     function handleBack() {
-
+        if (index > 0) {
+            setIndex(index - 1);
+        }
     }
 
     function handleNext() {
+        if (index < historyData.length - 1) {
+            setIndex(index + 1);
+        }
+    }
 
+    function Details() {
+        if (showDetails) {
+            return (
+                <div className="detials-text-container">
+                    <p>{historyData[index].details}</p>
+                </div>
+            )
+        }
     }
 
     return (
@@ -34,11 +49,12 @@ export default function App() {
                         <p className="history-count">Card <b>{index + 1}</b> of {historyData.length}</p>
                     </div>
                     <div className="next-back-container">
-                        <button className="back-button" onClick={handleBack()}>Back</button>
-                        <button className="next-button" onClick={handleNext()}>Next</button>
+                        {index > 0 && <button className="back-button" onClick={handleBack}>Back</button>}
+                        {index < historyData.length - 1 && <button className="next-button" onClick={handleNext}>Next</button>}
                     </div>
                     <div className="details-container">
-                        <button className="details-button">View Details</button>
+                        <button className="details-button" onClick={() => setShowDetails(true)}>View Details</button>
+                        <Details />
                     </div>
                 </div>
             </div>
